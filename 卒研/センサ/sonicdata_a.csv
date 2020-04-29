@@ -1,0 +1,14 @@
+import csv
+import matplotlib as plt
+import statistics as sta
+def main():
+    l_float_data=[]
+    with open("urtrasonic.csv","r") as f:
+        reader=csv.reader(f)
+        l_float_data=[row for row in reader]
+        for i in range(19):
+            data=[i*10,sta.median(l_float_data)]
+    print(data)
+            
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,1227 @@
+%%
+%% このサンプル & 解説は，pLaTeX-2e 専用です. 
+%%
+%% jsmepaper.tex
+%%                              Ver 0.1 Ken Kishimoto Mar. 3 1994
+%%                              Ver 1.2 Ken Kishimoto May. 30 1999
+%%                              Ver 1.5 Ken Kishimoto Oct. 11 1999
+%%                              Ver 1.57 Ken Kishimoto Mar. 09 2000
+%% $Id: jsmepaper.tex,v 1.5 2001/10/10 18:31:15 ken Exp ken $
+%%
+\documentclass[a4jsme]{jsmepaper}
+\usepackage{epic,eepic}
+\usepackage{graphics}
+%\usepackage{amsmath}
+\newif\iflatexe\latexetrue
+%
+\newcommand{\JSME}{日本機械学会}
+\newcommand{\bs}[1]{{$\backslash${#1}}\,}
+\newcommand{\mydoc}{jsme\-paper\-.cls}
+\newcommand{\addindex}[1]{#1\index{\protect #1}}
+%
+\title{日本機械学会スタイルファイルの解説}
+\subtitle{例とテスト}
+\etitle{Test and Example for writing paper with jsmepaper.sty in \LaTeXe\ }
+\esubtitle{Sample and Test}
+\jauthor{
+       山野  緑子$^{*1}$,\ \ 
+       何野  琴也$^{*2}$
+       }
+\eauthor{
+       Midoriko YAMANO$^{*1}$ and 
+       Boursi NANNO$^{*2}$
+       }
+\email{nanno@nannyo-u.ac.jp}
+\jaffiliation{
+       $^{*1}$ & 北国大学理工学部システム工学科 (〒012-2345 北海道
+	北国市中央3-4)\\
+       $^{*2}$ & 南陽大学教育学部園芸学科
+       }
+\eaffiliation{
+       $^{*1}$\ System Engineering Cource of Science and Techonology, Kitaguni University.\\
+       $^{*2}$\ Gardening, Education School in Nanyo University.
+       }
+\presentation{1999年5月21日 第34回伝熱シンポジウムにて講演}
+\date{1999年9月21日}
+\abstract{%
+This macro package is written for J.S.M.E. paper form using \LaTeX. 
+In this, pagestyle, 
+math envoironment, title page, temporary two column form for left/right table 
+or figure with document are defined. All spacing commands, top margin, column 
+separator and etc.  are changed to adjust to the specified as
+J.S.M.E. paper form style. 
+\abind
+\TeX\ can makes good printing of math expressions because it was produced by
+famous mathematician, D. Knuth, and L. Lamport made this excellent type
+setting program \TeX\ easy to use. 
+This macro package can be used for currently
+version p\LaTeXe\/ versionis patched for Japanese advanced by ASCII Co.
+}
+\keywords{typesetting, Paper format,\TeX, \LaTeXe\/, macros}
+%
+%\japan
+\makeindex
+\begin{document}
+\maketitle
+%
+%
+\section{はじめに}
+この文書は
+\LaTeX\/で日本機械学会の論文を書くために作成した
+\addindex{jsmepaper.cls}\/という
+日本機械学会の推奨\LaTeX\ スタイルファイルについての説明です. 
+このスタイルファイルは，p\LaTeXe\/ 用で platex によって
+タイプセット可能となっています. 
+このスタイルファイルは
+標準では
+日本機械学会の仕様(24文字$\times$47行,２段組)に合わせて
+タイプセットします. 
+印刷機の仕様上この文書は10ptで出力し，
+A4縦で出力しますが，
+これをB4に拡大するとそのまま投稿原稿に合わせることが出来ます. 
+また，
+B5に縮小すると論文集そのままとなります. 
+
+このように
+複写機の拡大縮小機能を用いて，
+論文を利用することが可能になります. 
+
+\TeX\/ を論文記述のためのツールとして紹介するのは，
+\begin{itemize}
+ \item 作成された文書がテキストであり，
+       電子情報として公開することに適しており，
+       全文検索などの効率的なテキストサーチ機構が使える. 
+      
+ \item 文章を論理構造で記述することができ，
+       ソーステキストの任意の位置で改行しても，
+       印字レイアウトに影響しない. 
+
+ \item 標準のフォントがあるために，誰が作成しても，印字は規格化された文
+       字にし易い. 
+
+ \item 図や表に組み込みに適している. 
+ \item カラーを含む各種の画像を取り込むことができる. 
+ \item 工学論文に多用される数式の表現が統一でき，もっとも豊富な数学記号
+       を持つ. 
+ \item 中国語，日本語，ロシア語などの混在した文書が作成可能
+\end{itemize}
+などの利点を持つためです. 
+しかし，
+\TeX は Markup Language であり，
+計算機能を備えたプログラム言語として機能も有するために
+多少難解な部分があること，
+GUI での作成，
+What you see is what you get. という見たままの出力ではないので，
+タイプセットをしながら組版する必要があることが
+難点となっています. 
+
+この\LaTeX 文書のソースを見ればわかるように，
+文節ごとに改行を入れた文が記述でき，
+比較的読み易く修正し易いものとなります. 
+
+\LaTeX\/ の文章作成は次の手順で行います. 
+\begin{itemize}
+ \item 
+       エディタ(\addindex{Mule}, \addindex{Nemacs} etc)で文章を作成します. 
+       これを\addindex{\LaTeX\/ソース}と言います. 
+       拡張子に{\ttfamily\addindex{.tex}}が付きます. 
+       使い慣れたエディタを利用します. 
+ \item 
+       作成したソースを{\ttfamily platex source.tex}のように
+       \LaTeX\/で\addindex{タイプセット}します. 
+       すると，
+       拡張子{\ttfamily .dvi}というファイルが出来上がります. 
+       これが，
+       \underline{d}e\underline{v}ice \underline{i}ndependent file 
+       といわれる印刷機を選ばない文書の元になるファイルです. 
+ \item 
+       この dvi ファイルを画面では，
+       {\ttfamily xdvi,dviout}などのプレビューアで作成状態を見ることができます. 
+       ワープロの詳細なレイアウト参照と同じです. 
+ \item 
+       うまく行っていれば，
+       {\ttfamily dvi2ps, jdvi2kps}などの
+       ポストスクリプト変換ファイルに通し印刷するか，
+       直接{\ttfamily dvipr}などで印刷機に出力します. 
+       これで完成です. 
+\end{itemize}
+この文書は，
+最初のエディタで文書を作成する時の\TeX\/の命令セットとして，
+\mydoc\/で定義されたものについて解説しています. 
+一般の\LaTeX\/命令は解説書\cite{lamport,latexguide}などを読んで下さい. 
+この\LaTeXe の市販公式ガイドブックは, アスキーから出版されている
+日本語\LaTeXe\/ブック\cite{asciiTeXe}に記述されています. また, 
+同様に準公式なTips(さまざまな技法)に関しては {\sl The \LaTeX\/
+Companion\cite{companion}} という本にまとめてあります. 
+
+\section{フォーム形式用命令}
+文字 '\addindex{\%}' は，
+\TeX\/では，その文字から行末までを無視しますので，
+コメントに使用できます．
+パーセントそのものは，ソース中に\verb+\%+と書きます. 
+
+\LaTeX\/の最初の文は
+\begin{quote}{\begin{verbatim}
+\documentclass[a4jsme]{jsmepaper}
+\end{verbatim}}\end{quote}
+です. 
+{\ttfamily jsmepaper} という文書形式を設定します. 
+ここから\bs{begin\{document\}}までがプリアンブルと言います. 
+この領域でタイトルなどを設定します. 
+
+\bs{documentclass\{jsmepaper\}}では，
+スタイルファイルの読み込みを行っています. 
+このスタイルファイルは論文用ですので，article となっており，
+標準の jart\-icle というスタイルを改変して作成したものです. 
+11pt, 12pt といった文字の大きさを指定するスタイルファイルを
+\bs{documentclass[12pt]\{jsmepaper\}}
+のようにつけることも出来ます. 
+このスタイルファイルはこの文字の大きさに応じて，
+jsme10.sty, jsme11.sty, jsme12.sty というファイルを自動的に組み込みます. 
+文字の大きさを指定しない場合に，
+10 point の大きさになります. 
+
+まず，
+紙の大きさを設定します. 
+紙の大きさが A5, A4, B5, B4 の４種類を選ぶことができます. 
+この設定は，\LaTeX\/標準ののものと異なるので，
+a4jsmeのように {\ttfamily 紙サイズ+ jsme.sty}を取り込みます. 
+a4jsme は，
+原稿の大きさがA4であること示します. 
+A4 以外は日本機械学会の論文の標準仕様にはなっていません. 
+
+
+\subsection{タイトルの作成}
+タイトル作成用にスタイルファイルの中では，
+標準の \LaTeX\/とは異なった
+日本機械学会仕様に変更された\addindex{\bs{maketitle}}マクロが定義されています. 
+この \mydoc では
+\addindex{article形式}で，
+タイトルと本文は同じページに出力されます. 
+
+このタイトル部分は，
+和文と欧文の２段となっており，
+タイトルに埋め込む文は，
+プリアンブルの間の中で定義します. 
+タイトル用には，
+表\ref{tbl:sytitle}の
+定義をすることができます. 
+
+欧文と和文の両方でタイトルを作成するために，
+\bs{j}\,\framebox[3em]{\rule{0pt}{1ex}} と
+\bs{e}\,\framebox[3em]{\rule{0pt}{1ex}} で
+タイトルやタイトルに付く著者や所属，
+キーワードなどのタイトル要素文字列を記述します. 
+\begin{center}
+ \mtcaption{タイトル作成用の命令}
+ \label{tbl:sytitle}
+ \begin{tabular}[b]{c|l|l}\dhline
+ 項目      & 欧文用命令    & 和文用命令 \\\hline
+ 表題      & \bs{etitle}    & \bs{\bf jtitle}\\
+ 著者      & \bs{eauthor}   & \bs{\bf jauthor}\\
+ 著者所属など & \bs eaffiliation & \bs{\bf jaffiliation} \\
+ 概要      & \bs{\bf eabstract} & \bs{jabstract}  \\
+ キーワード& \bs{\bf ekeywords} & \bs{jkeywords}  \\\hline
+ 論文受付日 & \multicolumn{2}{c}{\bs{date}} \\\hline
+ 事前講演など & \multicolumn{2}{c}{\bs{presentation}} \\\hline
+ EMAIL & \multicolumn{2}{c}{\bs{email}} \\\hline
+ \end{tabular}
+ \end{center}
+これらは\addindex{\bs{date}} を除いて省略することが出来ます. 
+当然省略すれば出力されず間隔はつまってきます. 
+しかし，
+\bs{date}を省略すると，
+\LaTeX\ でタイプセットした日付を出力します. 
+日付を出力しない時には\bs{date\{\}}とします. 
+
+表\ref{tbl:sytitle}の中の太字で示した命令は，
+\bs{\tt[j|e]title} などの{\ttfamily [j|e]} 部分を省いた場合に
+等しくなる命令です. 
+つまり，
+\bs{title}と書くと，\bs{jtitle}を指定したことに等しく，
+\bs{keywords}と書くと，\bs{ekeywords}を指定したことに等しくなりま
+す. 
+
+これらの設定を行うとドキュメントの先頭に出現する順は設定した順ではなく，
+この文書にあるような順に
+最初のページの上部に配置されます. \bs{date} と \bs{jaffiliation},
+\bs presentation は脚注に出力されます. 
+\index{\bs{jtitle}}\index{\bs{jauthor}}\index{\bs{jabstract}}
+\index{\bs{jkeywords}}
+\index{\bs{etitle}}\index{\bs{eauthor}}\index{\bs{eabstract}}
+\index{\bs{ekeywords}}\index{\bs{date}}
+
+\noindent
+具体的に文章の全体は：
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\documentclass[a4jsme]{jsmepaper}
+%
+\jtitle{スタイルファイルのテストと例}
+\jauthor{山野  緑子$^{*}$}
+\jaffiliation{$^{*}$北国大学理工学部}
+\keywords{\TeX, macros, 文書整形, 論文形式}
+\abstract{
+\LaTeX\/を使うとどんなことができるかを簡単に説明します. 
+ここでは，あらましを書きます. 
+}
+%
+\begin{document}
+\maketitle
+ .....
+\end{document}
+\end{verbatim}\end{quote}
+となります. 
+
+%
+%
+\subsubsection{論文名({\ttfamily title})}
+和文題名で，副題があったり，
+２行にわたるような長い題名では改行命令\verb+\\+を入
+れて調整します. 
+\verb!\abstract{ }! の \verb!{ }!に中には，空行を入れることはできません. 
+
+上の例では，和文のみの題名となります. 
+和文の題名に続いて英文題名を出力することもできます. 
+日本機械学会の形式では，英文の題名を省略することはできません. 
+
+題名の長さは，タイトル部分の幅になるように長さを制限しています. 
+そのため予期せぬ部分で改行されることがあります. 
+制限に対してあまり長くならないように改行するべきです. 
+
+\subsubsection{著者名({\ttfamily author})}
+和文著者名は，
+和文題名に続いて最初のページに右寄せで出力されます. 
+このマクロ名(命令)は，
+複数の著者であっても，{\ttfamily author} と単数となっています. 
+それぞれの著者の名前の後には，上付で注番号を次のように付けます. 
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\jauthor{山野 緑子$^{*1}$,\ \ 何野 琴也$^{*2}$}
+\end{verbatim}\end{quote}
+
+こうすると
+\begin{flushright}
+ 山野  緑子$^{*1}$,\ \ 何野  琴也$^{*2}$
+\end{flushright}
+のようになります. 
+著者名の間には\ \verb+\ \ +\ を入れて
+少し間を空けて下さい. 
+
+この著者名の右肩の$^{*1}$などは
+著者の所属を脚注に出力する時の合わせ番号です. 
+単一の所属の場合でも，$^{*1}$ で表わします. 
+数字のつかない$^{*}$ は題名に論文受付日の中として
+自動的に使われますので，
+使用しないで下さい. 
+
+英文著者名は，名と姓の順で書き，姓はすべて大文字で記述します. 
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\eauthor{Midoriko YAMANO$^{*1}$ and
+ Boursi NANNO$^{*2}$}
+\end{verbatim}\end{quote}
+
+オリジナルの\LaTeX では，\bs{and}が使え，
+改行と中心合わせができましたが，
+できるだけ一行に記述するため，\bs{and}は使えません. 
+また，
+和文著者名と同じように$^{*1}$などの合わせ番号を著者名の後に書きます. 
+
+
+この合わせ番号は，
+和文著者名と異なり，
+英文著者名のすぐ後にイタリックで記述される
+英文の所属名との合わせ番号となります. 
+%
+%
+%
+\subsubsection{著者所属({\ttfamily affiliation})}
+和文著者所属は脚注に，
+英文著者所属はタイトル部分に出力されます. 
+
+和文著者所属は次のように，
+先ほどの合わせ番号を先頭に付して記述します. 
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\jaffiliation{
+  $^{*1}$ & 北国大学理工学部システム工学科 \\
+  $^{*2}$ & 南陽大学教育学部園芸学科 
+  }
+\email{nanno@nannyo-u.ac.jp}
+\end{verbatim}\end{quote}
+脚注の出力は {\ttfamily tabular}環境で出力されるので, 合わせ番号と所属の間に 
+\& を入れます. 
+
+また，代表者の E-mail アドレスを上のように付けることを勧めます. 
+
+一方，
+英文著者所属は，次のように書きます. \& は不要ですので, 御注意下さい. 
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\eaffiliation{
+  $^{*1}$ System Engineering Cour....,\\
+          Kitaguni University.\\
+  $^{*2}$ Gardening, Education Sc....}
+\end{verbatim}\end{quote}
+
+英文著者所属は，英著者名すぐ後に，イタリック文字で出力されます. 
+省略した場合には，その部分は詰めて，何も出力されません. 
+
+%
+%
+%
+\subsubsection{アブストラクト({\ttfamily abstract})}
+\LaTeX\/標準仕様の\bs{abstract}環境では
+汎用の英論文に合わせて，２段組の場合，段組の中に出力されました. 
+しかし，
+日本機械学会の仕様に合わせて，
+\mydoc ではアブストラクトも
+タイトルブロックの中に段抜きで出力されます. 
+
+アブストラクトを記述するときは，\bs{[e$|$j]ab\-stract\{\}}の{\tt\{\}}の中に記述し
+ますが，段落をつけるため，\verb+\\+を入れても，段落最初の字下げはされま
+せん. アブストラクトの文の段落を付けるために\addindex{\bs{abind}}という命
+令が用意されています. 
+\begin{quote}\small\baselineskip 12pt\begin{verbatim}
+\jabstract{ .... 
+	.... ある. 
+	\abind 
+	１段組の場合 
+	...
+	}
+\end{verbatim}\end{quote}
+\noindent
+と書けば，段落が切り替わり字下げが行われます. 
+
+実際に
+この文書のタイトルが和文アブストラクトを除いた形式になっています. 
+
+\bigskip
+
+これで，プリアンブルの設定が終了です. 
+設定した内容をタイトルとして出力するには
+\bs{begin\-\{document\}}のすぐ後に\bs{make\-title}を入れます. 
+すると
+設定したタイトル要素が\bs{make\-title} 中で整理されて
+一括して出力されます. 
+%
+%
+\subsection{章節立て}
+\LaTeX\/の元々の仕様では，
+章節のタイトルの前後には大きな空白が入ります. 
+この仕様が日本機械学会の仕様と異なるため，
+この空白を少なくし，
+また，
+文字サイズもわずかに変化する程度となっています. 
+
+\newcommand{\gindex}[2]{\par #1\index{\protect\bs{#1}}:\ {\bfseries #2}}
+\gindex{part}{部}です. 
+ページを変え，
+大きな文字で出力されます. 
+日本機械学会の論文を記述する時には，使用することはありませんが，
+複数の論文をまとめて proceedings を作成したり，
+論文集出版にこの日本機械学会形式を使用する時に，利用できます. 
+
+\gindex{section}{章}です. 
+行の中央に少し上下に空白を付けて，
+本文より少し大きな文字でゴシックで出力されます. 
+
+\gindex{subsection}{節}です. 
+改行の後，行の左に太字で {\bf 4.2} のように章番号を伴って出力されます. 
+この後に続く文は，少し空白を空け，同じ行で始まります. 
+
+\gindex{subsubsection}{小節}です. 章・節を表わす３つの数字が
+付く以外\bs{subsection}と同じです. 
+
+\gindex{paragraph}{}, \gindex{subparagraph}{} などの
+さらに小さな単位の文を書くために用意されています. 
+
+これらは元々の \LaTeX\/と同名のコマンドですが，
+出力の形式が変更されています. 
+
+使用方法は，簡単で，
+\begin{quote}\small\baselineskip 11pt\begin{verbatim}
+\section{これが章の始まり}
+文章が始まり ........
+\end{verbatim}\end{quote}
+とすると，章が開始し，\medskip
+
+\begin{quote}\baselineskip 11pt
+\begin{center}
+ \bf 3. これが章の始まり
+\end{center}
+
+文章が始まり........
+\end{quote}\medskip
+となります. 
+
+論文の最後に
+\begin{quote}\baselineskip 11pt\begin{verbatim}
+ \tableofcontents
+\end{verbatim}\end{quote}
+とすると，目次が出力できます. 
+%
+%
+\subsection{数式}
+数式は，単独行に数式として書く場合と文中に書く場合の２種類があります. 
+数式ブロックには，
+\begin{quote}{\small\begin{verbatim}
+ \[               式番号が付かない１つの式. 
+ ....
+ \]
+
+ \begin{equation} 式番号が付く１つの式. 
+ ....
+ \label{eq:xxxxxx}
+ \end{equation}
+
+ \begin{eqnarray*} 式番号が付かない複数行の式. 
+ ....
+ \end{eqnarray*}
+
+ \begin{eqnarray} 式番号が付く複数行の式. 
+ ....
+ \label{eq:xxxxxx}
+ \end{eqnarray}
+\end{verbatim}}\end{quote}
+の４つがあります. この begin と end の間に式を書きます. 式の番号は自動的
+に付けられ，
+文中に参照も出来ます. 行列を記述する array環境などもあります. 
+また，$\int$や$\sum$という数学記号についても\LaTeX\/には，全部用意されて
+います. 数式の詳細な記述方法については，文献\cite{latexguide}や文献
+\cite{bibunsho}にあります. 
+
+また，文中では，
+\begin{quote}{\small\begin{verbatim}
+ その係数は, $10^{-4}$のオーダー....
+\end{verbatim}}\end{quote}
+のように，\$\$ で囲んで数式を書きます. 
+注意しなければならないのは，
+数式中に現れる変数名は数式モードの中に入れ，
+単位は数式モードの外になければならないと言うことです. 
+例えば，
+\begin{quote}{\small
+ここで，$|P|\sin(\omega t)\hspace{3mm}\mbox{単位 Pa}$ で，$\omega$は，
+}\end{quote}
+は，
+
+\noindent
+$\bullet$ソース
+\begin{quote}\small\begin{verbatim}
+ここで，$|P|\sin(\omega t)$\hspace{3mm}
+単位 Pa で，$\omega$は，
+\end{verbatim}\end{quote}
+の様にします. 
+
+また，数式中では，\verb+\pdif+で $\pdif{y}{x}$ のようにして，偏微分記号
+を簡単に書くことができます. しかし，本文中ではこのような分数を直接に書か
+ず，$\partial y/\partial x$とすべきです. \mydoc 中で定義されている数式や
+単位の使用する記号の内，頻繁に使用するもので入力の厄介なものはマクロにし
+てあり，表\ref{tbl:mysymb}となります. 
+
+\begin{table}[htbp]
+ \begin{center}
+ \caption{\mydoc 中の記号}
+ \label{tbl:mysymb}
+ \begin{tabular}{cc|cc}\dhline
+ 記号定義      & 記号   & 記号定義      & 記号  \\\hline
+ \verb+\degc+  & \degc  & \rule[0.1em]{0pt}{1.8em}\verb+\dif{Y}{x}+ & $\dif{Y}{x}$ \\[3mm]
+ \verb+\yen+   & \yen   & \verb+\ddif{Y}{x}+  & $\ddif{Y}{x}$ \\[3mm]
+               &        & \verb+\pdif{Y}{x}+  & $\pdif{Y}{x}$ \\[3mm]
+               &        & \verb+\pddif{Y}{x}+ & $\pddif{Y}{x}$ \\[3mm]\hline
+ \end{tabular}
+ \end{center}
+\end{table}
+
+この記号と略号を用いて，
+式を書くと
+\begin{equation}
+\rho c_p\pdif{T}{t}+\rho u c_p\pdif{T}{x} 
+ = \pdif{}{x}\left(\lambda\pdif{T}{x}\right)-q
+\end{equation}
+
+\noindent
+$\bullet$ソース
+\begin{quote}{\small\begin{verbatim}
+ \begin{equation}
+ \rho c_p\pdif{T}{t}+\rho u c_p\pdif{T}{x} 
+ = \pdif{}{x}\left(\lambda\pdif{T}{x}\right)
+ \end{equation}
+\end{verbatim}}\end{quote}
+のように出来ます. 
+
+\begin{figure*}[hbtp]
+%\begin{minipage}[c]{\textwidth}
+  \begin{eqnarray}
+   \frac{D\overline{u_iu_j}}{Dt} & = &
+    -\left(
+      \overline{u_iu_k}\pdif{U_j}{X_k}
+      +\overline{u_ju_k}\pdif{U_i}{X_k}
+     \right)+
+    \overline{\frac{p}{\rho}
+    \left(
+     \pdif{u_i}{X_j}
+     +\pdif{u_j}{X_i}
+    \right)}
+    -\pdif{}{X_k}
+    \left\{
+     \overline{u_iu_ju_k}
+     -\nu\pdif{u_iu_j}{X_k}
+     +\overline{\frac{p}{\rho}
+     \left(
+      \delta_{jk}u_i
+      +\delta_{ik}u_j
+     \right)}
+    \right\}\nonumber\\
+   && -2\nu\pdif{u_i}{X_k}\pdif{u_j}{X_k}
+  \label{eqn:e2}
+  \end{eqnarray} 
+%\end{minipage}
+\end{figure*}
+
+長い式で, 2段組の中に改行によっても入れられない場合には, 段抜きで入れま
+す. 式(\ref{eqn:e2})では, 次のように{\ttfamily figure*} 環境に入れます. 
+\begin{quote}{\small\begin{verbatim}
+\begin{figure*}[hbtp]
+%\begin{minipage}[c]{\textwidth}
+  \begin{eqnarray}
+   \frac{D\overline{u_iu_j}}{Dt} & = &
+    -\left(
+      \overline{u_iu_k}\pdif{U_j}{X_k}
+      +\overline{u_ju_k}\pdif{U_i}{X_k}
+     \right)+
+    .......
+     \right)}
+    \right\}\nonumber\\
+   && -2\nu\pdif{u_i}{X_k}\pdif{u_j}{X_k}
+  \label{eqn:e2}
+  \end{eqnarray} 
+%\end{minipage}
+\end{figure*}
+\end{verbatim}}\end{quote}
+
+こうすると, このページの上に示すように, 段抜きで出力できます. 
+%
+%
+\subsection{表の作成方法}
+表は通常 \addindex{table 環境}中に{\ttfamily center 環境}\index{center 環境},
+\addindex{tabular 環境}を入れて，列の中央部に表題付で入れることになりま
+す. 表 \ref{tbl:mysymb}は\\
+\noindent
+$\bullet$ソース
+\begin{quote}{\small\begin{verbatim}
+\begin{table}[htbp]
+ \begin{center}
+ \caption{\mydoc 中の記号}
+ \label{tbl:mysymb}
+ \begin{tabular}{cc|cc}\dhline
+  記号定義 & 記号 & 記号定義 & 記号\\\hline
+  \verb+\degc+ & \degc & ... &  ...\\
+  \verb+\yen+ & \yen & ... &  ...\\
+              &      & ... &  ... \\\hline
+  \end{tabular}
+ \end{center}
+\end{table}
+\end{verbatim}}\end{quote}
+となります. さらに複雑な表を必要とすることもあるでしょう. その場合は適当
+な\LaTeX\ の解説書\cite{lamport}を読んで下さい. 
+
+表には，\addindex{表の題名}になる \addindex{\bs{mtcaption}} ，\addindex
+{表につけるラベル} \addindex{\bs{label}} を必ず付けるようにします. この 
+\addindex{\bs{label}}\/に設定した文字は出力されませんが文中の他の部分で参
+照する時に用います. 表の作成方法での注意を箇条書にすると，
+
+次のようになります. 
+\begin{enumerate}
+ \item \bs{caption} は必ず次のように \bs{label} の前で定義します. 
+ \item \bs{begin\{tabular\}[{\it pos}]\{{\it cols}\}}の{\tt\it pos}は，
+       {\tt b}(下合わせ) か，
+       {\bf なし}(中央) です. こうしないと上下のバランスを崩します. 
+\end{enumerate}
+また，
+\LaTeX\/ には用意されていませんが，
+表中で \verb+\dhline+ を用いる
+と太い罫線を引くことができます. 
+
+%
+%
+\subsection{箇条書}
+表と同様に，
+箇条書を行う\addindex{\bs{enu\-merate}環境}や
+\addindex{\bs{itemize}環境}も上下に大きな空白を空けます. 
+このため，
+標準の\LaTeX\/に対して，
+これらのスペーシングを調整してあります. 項目間のスペーシングが変化
+する以外，元の使い方と全く同じです. 
+
+\noindent$\bullet$箇条書きの形式
+\begin{quote}{\small\begin{verbatim}
+\begin{enumerate}
+ \item ......
+ \item ......
+\end{enumerate}
+\end{verbatim}}\end{quote}
+{\ttfamily \addindex{箇条書}}では，
+項目には数字やアルファベットがついて出力されます. 
+上の例のように{\ttfamily \addindex{enumerate 環境}}は\index{list環境の入れ子}入れ子
+になっていても構いません. 内側の項目と外の項目とは別の記号で番号が付けら
+れます. 
+
+\noindent$\bullet$項目書きの形式\index{項目書き}
+\begin{quote}{\small\begin{verbatim}
+\begin{itemize}
+ \item ......
+ \item ......
+\end{itemize}
+\end{verbatim}}
+\end{quote}
+この他に，description\index{description環境}, verse\index{verse環境} と
+いった環境で，項目の出力を行うことも出来ますが，これらはすべて 
+\LaTeX\/の \addindex{list 環境}の一種となっています. 
+%
+%
+\subsection{一時的２段組}
+
+１段組の場合には \addindex{\bs{mini\-twocolumn}} を用いて，一時的に
+２段組を行います. このマクロは左右の高さを作成中に合わせる必要があるなど，
+まだ十分に機能していません. 二段組の中で用いた場合には何も起こりません. 
+この\mydoc は基本的に２段組ですので，このマクロを用いることはないでしょ
+うが，
+
+このマクロは
+\begin{quote}{\small\begin{verbatim}
+ \minitwocolumn{左側ブロック}{右側ブロック}
+\end{verbatim}}\end{quote}
+という仕様で \addindex{{\ttfamily minipage}環境}を用いて２段組を行います. こ
+のとき，左右のブロックの縦の長さは一致している必要があります. 特にどちら
+かが文章の場合には，その文章の方のサイドの縦の長さが反対のサイドの縦長さ
+よりも長い方が美しく組むことが出来ます. 
+%
+%
+\subsection{図・表の作成方法}
+図を論文に入れる場合，
+簡単な図の時は，
+epic.sty を用いて\TeX\/ソース中に
+直接書いてゆくのも１つの方法です. 例えば
+%\begin{figure}[htb]
+ \begin{center}
+ \setlength{\unitlength}{0.25mm}
+ \begin{picture}(200,165)
+ \thicklines
+ \path(20,45)(40,50)(80,58)(120,63)(160,67)(180,67)
+ \path(20,130)(40,125)(80,117)(120,112)(160,108)(180,108)
+ \thinlines
+ \path(40,125)(40,50)
+ \path(80,117)(80,58)
+ \path(120,112)(120,63)
+ \path(160,108)(160,67)
+ \path(140,85)(140,10)
+ \thinlines
+ \path(100,85)(100,20)
+ \path(60,85)(60,30)
+ \put(20,15){\vector(1,0){120}}
+ \put(20,25){\vector(1,0){80}}
+ \put(20,35){\vector(1,0){40}}
+ \thicklines
+ \put(60,85){\circle{4}}
+ \put(100,85){\circle{4}}
+ \put(140,85){\circle{4}}
+ \put(25,145){\circle{4}}
+ \put(30,140){\makebox(100,10)[tl]{control point}}
+ \thinlines
+ \put(105,130){\line(-1,0){10}}
+ \put(95,130){\vector(-1,-3){5}}
+ \put(105,125){\makebox(80,10)[tl]{control volume}}
+ \put(65,30){\makebox(25,10)[l]{$x_{i-1}$}}
+ \put(105,20){\makebox(25,10)[l]{$x_i$}}
+ \put(145,10){\makebox(25,10)[l]{$x_{i+1}$}}
+ \put(50,95){\makebox(20,10)[l]{$\phi_{i-1}$}}
+ \put(90,95){\makebox(20,10){$\phi_{i}$}}
+ \put(130,95){\makebox(20,10){$\phi_{i+1}$}}
+ \end{picture}
+ \mfcaption{差分の位置と制御体積，制御点}
+ \label{fig:controlv}
+ \end{center}
+%\end{figure}
+という図は，
+
+
+\noindent$\bullet$PiC\TeX の書き方
+\begin{quote}{\small\begin{verbatim}
+\begin{center}
+ \setlength{\unitlength}{0.25mm}
+ \begin{picture}(200,145)
+ \thicklines
+ \path(20,45) .....
+  .....
+ \end{picture}
+ \mfcaption{差分の位置と制御体積，制御点}
+ \label{fig:controlv}
+\end{center}
+\end{verbatim}}\end{quote}
+としています. また，別な方法として \addindex{gnuplot} や \addindex{tgif} 
+といった \addindex{Postscript} を出力するツールからのファイルを取り込む
+ことも出来ます. 
+
+\begin{figure*}[hbt]
+ \setlength{\unitlength}{0.23mm} % 162mm
+ \begin{minipage}[b]{73.6mm}
+ \begin{picture}(320,320)
+  \thinlines
+  \path(0,0)(320,0)(320,320)(0,320)(0,0)
+ \end{picture}
+  \mfcaption{長い長い題名, \newline 長い長い題名, 長い長い題名, 長い長い
+  題名, 長い長い題名, サンプル図１}
+  \label{fig:sample1}
+ \end{minipage}
+ %
+ \begin{minipage}[b]{82.8mm}
+  \begin{picture}(360,140)
+   \thinlines
+   \path(0,0)(360,0)(360,140)(0,140)(0,0)
+  \end{picture}
+  \mfcaption{サンプル図２}\label{fig:sample2}
+  \hfil
+  \begin{picture}(290,140)
+   \thinlines
+   \path(0,0)(290,0)(290,140)(0,140)(0,0)
+  \end{picture}
+   \mfcaption{サンプル図３}\label{fig:sample3}
+ \end{minipage}
+%
+ \begin{minipage}[b]{101.2mm} % 幅広
+ \begin{center}\begin{picture}(440,140)
+ \thinlines
+ \path(0,0)(440,0)(440,140)(0,140)(0,0)
+ \end{picture}
+ \mfcaption{サンプル図４}\label{fig:sample4}\end{center}
+ \end{minipage}
+%
+ \begin{minipage}[b]{55.2mm}
+ \begin{center}\begin{picture}(240,140)
+ \thinlines
+ \path(0,0)(240,0)(240,140)(0,140)(0,0)
+ \end{picture}
+ \mfcaption{サンプル図５}\label{fig:sample5}\end{center}
+ \end{minipage}
+ \caption{多くの図の配置サンプル}
+ \label{fig:mulsampl}
+\end{figure*}
+%
+
+\noindent$\bullet$\ Postscriptファイルの取り込み方
+
+プリアンブルで，
+\begin{quote}{\small\begin{verbatim}
+\usepackage[dvips]{graphicsx}
+\end{verbatim}}\end{quote}
+としておけば，使用することができます. もし，使用することができない場合に
+は，文献\cite{bibunsho}で調べて下さい. 
+
+\begin{quote}{\small\begin{verbatim}
+\begin{figure}[h]
+\begin{center}
+ \scalebox{0.7}{\includegraphics{psfft.eps}}
+ \caption{ポストスクリプトの図です}
+ \label{fig:postscript}
+\end{center}
+\end{figure}
+\end{verbatim}}\end{quote}
+とします. 
+%\begin{figure}[h]
+%\begin{center}
+% \scalebox{0.7}{\includegraphics{psfft.eps}}
+% \caption{ポストスクリプトだぞ}
+% \label{fig:postscript}
+%\end{center}
+%\end{figure}
+これによって，
+Postscript を含んだ文書も, dvi2ps(dvipr) という
+ツールで出力できます. 
+gnuplot のデフォールトで出力したものは scale=0.34で２段幅に入ります. 
+
+\subsection{たくさんの図や表の入れ方}
+多くの図では，\addindex{minipage環境}を用いて１つの図を１つの小さなペー
+ジと見なして配置してゆく方法が簡単です. １つ１つの minipage はあたかもそ
+れが１つの大きな文字のように扱われます. この文字をどのように並べるかは図
+によって異なります. 図\ref{fig:mulsampl}は，このようにして図を示した例で
+す. 
+\smallskip
+
+\noindent$\bullet$多くの図の配置例
+{\small\begin{verbatim}
+\begin{figure*}[hbt]
+\setlength{\unitlength}{0.23mm}
+ \begin{minipage}[b]{60mm}% まず始めの図 幅に注意
+ \begin{center}\begin{picture}(320,300)
+ ...
+ \end{picture}\caption{.....}\label{fig:...}
+ \end{center}
+ \end{minipage}
+ \begin{minipage}[b]{60mm}% ２，
+３番目の図
+ \begin{center}\begin{picture}(290,140)
+ ...
+ \end{picture}\caption{...}\label{fig:...}
+ \end{center}
+ \begin{center}\begin{picture}(290,140)
+ ...
+ \end{picture}\caption{...}\label{fig:...}
+ \end{center}
+ \end{minipage}
+ \begin{minipage}[b]{100mm} % 幅広 ４番目の図
+ \begin{center}\begin{picture}(520,140)
+ ...
+ \end{picture}\caption{...}\label{fig:...}
+ \end{center}
+ \end{minipage}
+ \begin{minipage}[b]{55mm}
+  ...
+ \end{minipage}
+\end{verbatim}}
+%
+%
+\subsection{図・表のタイトルと参照}
+\LaTeX\ 標準の table や figure 環境では，\addindex{\bs{caption}}を用いて
+図や表に名前を付けます. 今までに出てきた
+\begin{center}{\small
+図1\hspace{1em}差分の位置と制御体積，制御点}\end{center}というのがそうで
+す. しかし，この文書中では前後の空白を避けるために，table や figure は用
+いていません. 直接 \addindex{tabular環境} や 
+\addindex{picture 環境}に入ります. こうするとこの１つの環境は図形ブロッ
+クであり，大きな１つの文字として扱われるため図名や表題をつけることもこれ
+らに label をつけて参照することも出来ません. 
+そこで，\addindex{\bs{mfcaption}}, \addindex{\bs{mtcaption}} を用意して，
+任意の場所で図表を定義してラベルをつけ，参照命令 \addindex{\bs{ref}}で参
+照できるようにしています. 
+
+\begin{quote}
+ \hspace*{1cm}表の場合には \bs{mtcaption}\\
+ \hspace*{1cm}図の場合には \bs{mfcaption}
+\end{quote}
+を使い分けて下さい. これらのマクロを，\addindex{figure 環境}や 
+\addindex{table 環境}で用いても元の \addindex{\bs{caption}} と同じとなり，
+害はありません. 
+
+これには現在バクがあり, ページの切れ目にかかると caption と本体が分離す
+ることがありますので, 多用しないで, できるだけ figure や table 環境に入
+れることを勧めます. 
+%
+%
+\subsection{インデント}
+文章をインデントする時，\addindex{itemize環境} や \addindex{quotation環
+境} でインデントされますが，任意の幅でインデントするためには 
+\bs{indention\{{\it len}\}} \index{\bs{indention}}を用います. インデント
+した文の頭に記号 などを付けることも出来ますが，このマクロは単純な段付け
+を行う目的で作成 しています. 
+\begin{indention}{5mm}
+ 5mm インデントしました. この長さでは折り曲げられるでしょうか
+\begin{indention}{5mm}
+ さらに5mm インデントしました. この長さでは折り曲げられるでしょうか
+\end{indention}
+そして，元に戻しました. この長さでは折り曲げられるでしょうか
+\begin{indention}{5mm}
+\inditem{◯}再び5mm インデントしました. この長さでは折り曲げられるでしょうか
+\end{indention}
+\end{indention}
+
+\noindent$\bullet$ソース
+\begin{quote}{\small\begin{verbatim}
+\begin{indention}{5mm}
+ 5mm インデントしました. この長さでは...
+\begin{indention}{5mm} 
+  さらに5mm インデントしました. この長...
+\end{indention}
+ そして，元に戻しました. この長さでは...
+\begin{indention}{5mm}
+  \inditem{◯}再び5mm インデントしまし...
+ \end{indention}
+\end{indention}
+\end{verbatim}}\end{quote}
+とします. 
+%
+%
+\section{引用文献の書き方}
+引用文献は {\sc Bib}\TeX を用いる方法がありますが，ここでは thebibliography 環境で処理する方法を示します. 
+
+参照した文献名は最後にまとめて，
+\begin{quote}{\small\begin{verbatim}
+{\small
+\begin{thebibliography}{99}
+\bibitem{lamport}           % 雑誌の場合
+著者,``題名'',{\sl 雑誌名},
+{\bf 巻}-号, (年-月),
+pp.開始ページ -- 終了ページ
+\bibitem{latexguide}        % 本の場合
+著者,``何章 章の題名'',
+{\sl 書名},発行社,
+(年号), p.参照頁
+\bibteim{}
+.....
+\end{thebibliography}}
+\end{verbatim}}\end{quote}
+とします. 
+
+複数の学会に所属し, 同じ文献をそれらに使用する場合, 引用文献の書き方が学
+会ごとに異なる場合があります. この時は, {\sc Bib}\TeX という文献データベースを
+使用します. 文献データベースでは, bib-style というスタイルファイルが必要
+となります. 日本機械学会使用の文献スタイルファイルが用意される予定です. 
+%
+
+\subsection{文献引用の方法}
+文献の引用は, cite マクロを使用します. 
+引用した部分に, \bs{cite\{{\it name}\}} を入れます. 例えば, 
+\begin{quote}{\small\begin{verbatim}
+この条件での浮き上がり高さは2.5mmと言われています\cite{jsme1999-8}. 
+\end{verbatim}}\end{quote}
+のようにします. 
+こうすると, 
+\begin{quote}{\small
+この条件での浮き上がり高さは2.5mmと言われています$^{(8)}$. 
+}\end{quote}
+と, 上付で {\ttfamily ( )}で囲まれて出力されます. 
+
+複数の文献を一括して引用する
+場合には {\ttfamily \bs{cite} \{name1,name2,name3\}}
+とします. この場合は $^{(3),(9),(10)}$のように
+それぞれを{\ttfamily ,\/} で区切って
+出力されます. 
+
+多くは, 人名や文節の後につきますが, 
+``言われています. $^{(8)}\cdots\cdots$''のように
+句読点の後に引用を付けることは
+間違いです. 
+``言われています$^{(8)}$. $\cdots\cdots$''のように
+句読点の前に入れます. 
+
+\section{最後のページ}
+論文の最終ページは, 左右の段を同じ長さに揃えて, 最後に横線を引きます. 
+この処理は, \LaTeX ではそう簡単ではありません. そこで, \JSME の論文の形
+式に合わせて, 最後のページを構成するためのマクロ
+\bs{\ttfamily lastpagehr\{\}}を用意しました. 
+この処理は論文を書き上げて最後に行う処理になります. 
+
+まず, 図\ref{fig:lastpage}の左に示すように, 
+このマクロを入れないで書くと, 
+最後のページは, 図や表が入らない時には
+左右の段の長さが異なってきます. 
+右の段のないケースもあります. 
+
+左右どちらかの段で, 
+そのページの下端までの長さ(図では60mm$\times$2)が分かった時点で, 
+段の長さを揃えた時の下部の空白長さ(図では60mm)を指定した
+マクロ {\tt\bs{lastpagehr\{60mm\}}}を, 
+そのページの左段の部分のどこかの箇所に挿入します. 
+すると, 
+図\ref{fig:lastpage}の右に示すように, 
+両方の段長さを揃えてページの終りを示す横線を書くことができます. 
+
+この長さの指定が行の長さであれば, 
+{\tt\bs{lastpagehr\{12\tt\bs{baselineskip\}}}}
+という指定もできます. 
+
+\begin{figure}[htbp]
+ \begin{center}
+ \unitlength 1mm
+ \noindent
+ \begin{picture}(80,64)(0,0)
+ \put(2,62){\makebox(0,0)} 
+ \put(2,0){\framebox(35,60){}} 
+ \put( 5, 5){\dashbox{0.3}(13,50){}} 
+ \put(20,35){\dashbox{0.3}(13,20){}} 
+ \put(6,39){\makebox(0,0)[l]{\%\bs{\ttfamily lastpagehr\{60mm\}}}}
+ \put(28,5){\vector(0,1){30}}
+ \put(28,6){\vector(0,-1){1}}
+ \put(27,20){\makebox(0,0)[r]{60mm$\times$2}}
+ \put(43, 0){\framebox(35,60){}} 
+ \put(46,20){\dashbox{0.3}(13,35){}} 
+ \put(61,20){\dashbox{0.3}(13,35){}} 
+ \put(47,39){\makebox(0,0)[l]{\bs{\ttfamily lastpagehr\{60mm\}}}}
+ \put(54,18){\line(1,0){12}}
+ \put(62,5){\vector(0,1){15}}
+ \put(62,6){\vector(0,-1){1}}
+ \put(61,13){\makebox(0,0)[r]{60mm}}
+ \end{picture}
+ \caption{最後のページ制御}
+ \label{fig:lastpage}
+ \end{center}
+\end{figure}
+%
+%
+\section{目次と表図のリスト}
+通常は，必要ありませんが，目次と表図のリストは最後に出力します. 
+そのため，
+\begin{quote}{\small\begin{verbatim}
+%
+\clearpage
+\tableofcontents
+\listoffigures
+\listoftables
+%
+\end{document}
+\end{verbatim}}\end{quote}
+として，出力します. 
+
+%
+\section{文字}
+\subsection{文字の大きさ}
+\LaTeXe\/で使用できる文字の大きさには
+表\ref{tbl:mojiscale}のようなものがあります. 
+\begin{table}[htbp]
+ \begin{center}
+ \caption{使用可能な文字サイズ}
+ \label{tbl:mojiscale}
+ \begin{tabular}{l|l|l}\dhline
+ 文字サイズ & コマンド & 文字 \\\hline
+ tiny         & \verb+\tiny+ & {\tiny 小さな1/4角文字です. } \\
+ scriptsize   & \verb+\scriptsize+ & {\scriptsize 添え字用文字です. } \\
+ footnotesize & \verb+\footnotesize+ & {\footnotesize 脚注文字です. } \\
+ small        & \verb+\small+ & {\small 小文字です. } \\
+ normalsize   & \verb+\normalsize+ & {\normalsize 標準文字です} \\
+ large        & \verb+\large+ & {\large 節を作る文} \\
+ Large        & \verb+\Large+ & {\Large 章を作る} \\
+ LARGE        & \verb+\LARGE+ & {\LARGE 大文字} \\
+ huge         & \verb+\huge+ & {\huge ４倍角} \\
+ Huge         & \verb+\Huge+ & {\Huge 巨大} \\\hline
+ \end{tabular}
+ \end{center}
+\end{table}
+
+\LaTeXe\/ では, さらに細かく設定できますが必要とするケースはほとんどない
+と思います. 
+
+これらは \{\bs{small} $\cdots$ \}というように \{ \} で囲んで書体を変える
+部分のみを指定します. 普通の\TeX\/には縦倍角や横倍角はありません. これら
+の文字で文全体を書くことはないのですが，どうしても必要であるならばポスト
+スクリプトで文字を書き，
+\addindex{\bs{includegraphics}} 命令で利用します. 
+
+\LaTeXe\/ では, 
+簡単に {\ttfamily \bs{resizebox},\bs{scalebox}} で自由に文字のサイズを変
+更できます. 
+\begin{quote}
+ \resizebox{12zw}{0.6zw}{横に平たい書体}
+ \resizebox{5zw}{1zw}{縦に長い書体}
+\end{quote}
+
+また, 
+このパッケージで, \LaTeXe\/ では, 
+使用方法が変更された太字やイタリック斜体などの文字形式
+の変更(\bs{bf},\bs{rm},\bs{tt}など)も拡張復活していますので, 
+\LaTeX 209\/ で作成された文書も, \bs{documentstyle} というヘッダー
+を\bs{documentclass}に変更するだけで使用できます. 
+
+\subsection{フォント}
+表\ref{tbl:mojifont}に使用可能な書体を示します. 書体名に$^*$がついている
+ものは\mydoc\/で拡張したものですので，\LaTeX\/そのままでは使用できません. 
+また，記号名が空欄のものは標準にサポートされていない書体ですので，
+
+\input{fontsample}
+
+\begin{quote}{\small\begin{verbatim}
+\font\dnhl=cmdunh10
+{\dnhl これは Dunhill 書体の 10ptです. }
+\end{verbatim}}\end{quote}
+というように使用します. 
+御自分のコンピュータの{\ttfamily /usr/share/texmf/fonts}か, 
+{\ttfamily e:\bs{texmf}\bs{fonts}}に使用したいフォントのファイルがあれば，
+上のようにしてフォントを利用できます. 
+また，サイズの異なるフォントを使用する場合には
+\begin{quote}{\small\begin{verbatim}
+\font\lss=lcmss8 scaled \magstep1 
+{\lss これは Sans Selif 小体の 10ptです. }
+\end{verbatim}}\end{quote}
+のように拡大して使用します. 
+
+% \lastpagehr{4.5\baselineskip}
+
+\TeX\/ では多くのフォントを用いることができます. 
+文書や図中に多くのフォントを使用することは, 表現力は増しますが, 
+読みづらく, 見にくいものになります. 
+
+通常の\LaTeX\/ では, Computer Modern という形式のフォントを用います. 
+しかし, \LaTeXe\ では, 様々なフォントが使えるように改良され, 
+Postscript フォントを用いることも可能です. 
+このスタイルファイルでは, 従来日本機械学会で作成していた形式にしたがって, 
+Postscript の Times-Roman フォントを使用しています. 
+もし, dviout などの表示ソフトで, タイプセットした原稿の中で, 
+英文部分の文字が表示できない場合には, 
+\mydoc の始めのほうにある
+\begin{quote}\small
+ \begin{verbatim}
+ \RequirePackage{times}
+ \RequirePackage{mathptm}
+ %\RequirePackage{pifont}
+\end{verbatim}\end{quote}
+の\bs{RequirePackage}の先頭に \% を付けて Times-Roman フォントを使用しな
+いように設定して下さい. 
+
+%
+文献\cite{bibunsho}に Postscript フォントを使用する方法が掲載されています. 
+
+ 
+\subsubsection{外字}
+御自分の名字などがフォントとして存在していない場合, 作字して使用すること
+になります. 
+もっともいい方法は MetaFont を使用する方法ですが, これを使用した文書を転
+送する場合には問題があります. そこで, 必要な大きさの bitmap を直接ソース
+内に記述する {\ttfamily bitmap.sty} を使用するか, Postscript で記述したものを
+拡大縮小して使用して下さい. 
+
+\section*{謝辞}
+ここに謝辞を書いて下さい. 
+
+{\small
+\begin{thebibliography}{99}
+ \bibitem{lamport}
+	 Laslie Lamport,
+	 {\it \LaTeX---A Document Preparation System},
+	 Addison-Wesley, (1986)
+	 (訳:\ Edgar Cooke, 倉沢良一監訳, 大野俊治,小暮博道, 藤浦はる美,
+	 {\itshape 文書処理システム \LaTeX\/},
+	 (株)アスキー,(1992-10))
+ \bibitem{noderatex}
+	 野寺隆志,
+	 {\itshape 楽々\LaTeX},
+	 共立出版 (1990), 233-245
+ \bibitem{onotex}
+	 大野義夫,
+	 {\itshape \TeX\/入門},
+	 共立出版 (1989)
+ \bibitem{latexguide}
+	 伊藤　和人,
+	 {\itshape \LaTeX\/トータルガイド},
+	 {\em Shuwa System Trading Co.,Ltd.}, (1992-8)
+ \bibitem{bibunsho}
+	 奥村晴彦,
+	 {\itshape [改訂版]\LaTeXe\/美文書作成入門 --- パソコンによる文書レイアウト},
+	 技術評論社,(2000)
+ \bibitem{asciiTeXe}
+	 中野　賢,
+	 {\itshape 日本語\LaTeXe\/ブック},
+	 (株)アスキー,(1996)
+ \bibitem{texbook}
+	 Donald E. Knuth,
+	 {\it The \TeX\,book},
+	 Addison-Wesley, (1986)
+	 (訳:\ 斎藤信男監修, 鴬谷好輝,
+	 {\itshape 改訂新版\TeX ブック},
+	 (株)アスキー,(1992))
+ \bibitem{companion}
+	 Michel Grossens and Frank Mittelbach and Alexander Samarin,
+	 {\it The \LaTeX\/ Companion},
+	 Addison-Wesley, (1994)
+	 (訳:\ アスキー書籍編集部,
+	 {\it The \LaTeX\/ コンパニオン},
+	 (株)アスキー,(1998))
+ \bibitem{companion}
+	 Victor Eijkhout,
+	 {\itshape \TeX by Topic A {\TeX}nician's Reference}
+	 Addison-Wesley, (1991)
+	 (訳:\ 富樫 秀昭,
+	 {\itshape \TeX by Topic -- \TeX をより深く知るための39章 -- }
+	 (株)アスキー,(1999))
+\end{thebibliography}
+}
+%\tableofcontents
+%\listoffigures
+%\listoftables
+%\clearpage
+%\input{jsmepaper.idx} 
+\end{document}

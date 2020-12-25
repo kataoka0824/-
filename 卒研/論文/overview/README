@@ -1,0 +1,74 @@
+jsmepaper2e-1.5
+
+このパッケージには ASCII pLaTeX-2e 専用のスタイルファイルが入っています。
+
+    README            このファイル
+    a4jsme.sty        A4 版のスタイルファイルです。
+    a5jsme.sty        A5 版のスタイルファイルです。
+    b4jsme.sty        B4 版のスタイルファイルです。
+    b5jsme.sty        B5 版のスタイルファイルです。
+    epic.sty          PiCTeX のマクロファイル
+    eepic.sty         拡張 PiCTeX のマクロファイル
+    jsadd.sty         jsmepaper.sty の補助ファイル
+    jsme10.sty        10 point 文字の設定ファイル
+    jsme11.sty        11 point 文字の設定ファイル
+    jsme12.sty        12 point 文字の設定ファイル
+    jsmefont.sty      jsmepaper 使用のフォント設定ファイル
+    jsmepaper.bib     ---
+    jsmepaper.cls     jsmepaper の LaTeX2e スタイルファイル
+    jsmepaper.tex     このスタイルファイルで記述した説明書
+    psfft.eps         空の Postscript ファイル
+    template.tex      このスタイルファイルで、論文を記述するためのテンプレー
+                      トです。このファイルに記述していくことで、論文が出来
+                      上がります。
+    giftops           画像変換 gif --> ps 
+    psjtogif          画像変換 ps --> gif 
+    jsmeheader.sty    論文表紙のスタイルファイル
+    jsmeheader.tex    論文表紙テンプレート
+    jsmeheadersample.tex  論文表紙のサンプル
+    install.sh        インストール用のシェルスクリプト    
+ 
+
+バグ：Ver 1.5
+ o  著者名、所属、Email など著者ごとに設定できない。
+ o  A4 以外の版では、動作しないものがある。
+
+-------------------------
+ダウンロードしたファイルの展開方法 
+
+○ UNIX の場合 
+
+UNIX では，通称 tarball という形式で，複数のファイルが１つのファイルにま
+とめられています。
+このファイルを適当な場所で次のように展開します。 
+
+          % tar zxvf jsmeptex-2e.tar.gz 
+
+するとその場所に，新しいディレクトリが作られ，その中に多くのファイルがあり
+ます。このファイルの中に install.sh がありますので，このファイルの先頭に記
+述してあるインストール場所などを，自分のマシンの環境に合わせて修正して，
+
+          % ./install/sh 
+
+を実行して下さい。 
+sty や tex という拡張子を持つファイルは，TeX が探すことのできるパ スに置く
+必要があります。
+
+○ DOS/Windows の場合 
+
+zip という形式で，複数のファイルが１つのファイルにまとめられています。 
+Explorer を開いて，ダウンロードしたファイル名をクリックすることで展開して
+下さい。新しいディレクトリの中に，その中に多くのファイルが あります。これ
+らのファイルを，TeX for Windows など，TeX の環境をインストールした場所に移
+動して下さい。
+sty や tex という拡張子を持つファイルは，インストールした TeX の決 められ
+た場所にに置く必要があります。
+
+● 含まれているファイルとサンプル 
+
+ダウンロードしたファイルには README がありますので，お読み下さい。
+
+template.tex は，すでに論文を書くために必須のいくつかのマークアップを記述
+したファイルです。上書きしながら，執筆することができます。
+
+jsmeheader.tex は，論文投稿用の表紙です。サンプルを参照して下さい。

@@ -1,0 +1,29 @@
+% a4jsme.tex
+%    paper size A4 for J.S.M.E. paper
+%                                (c) 1994  Ken Kishimoto
+%
+\columnsep 28pt
+\leftmargini 2em
+\leftmarginv .5em
+\leftmarginvi .5em
+\marginparwidth 5pt
+\marginparsep 5pt
+\headsep 15pt\footskip 14pt
+\parindent 1zw
+\@ifundefined{@lands}{
+  \paperheight 296mm
+  \paperwidth 210mm
+  \dimen1 80mm
+}{
+  \paperheight 210mm
+  \paperwidth  296mm
+  \dimen1 350pt
+}
+\textheight\paperheight\advance\textheight -52mm
+\textwidth 2\dimen1 \advance\textwidth\columnsep
+\dimen0 3in \advance\dimen0\textwidth
+\oddsidemargin\paperwidth \advance\oddsidemargin -\dimen0
+\divide\oddsidemargin 2
+\advance\oddsidemargin 0.6in
+\evensidemargin\oddsidemargin
+\topmargin -0.3in

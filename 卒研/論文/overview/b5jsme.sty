@@ -1,0 +1,33 @@
+% b5jsme.tex
+%    paper size b5 for J.S.M.E. paper
+%                                (c) 1994  Ken Kishimoto
+%
+\newdimen\paperheight
+\newdimen\paperwidth
+\columnsep 176pt
+\leftmargini 2em
+\leftmarginv .5em
+\leftmarginvi .5em
+\marginparwidth 5pt
+\marginparsep 5pt
+\headsep 14pt\footskip 12pt
+\parindent 1zw
+\@ifundefined{@lands}{
+  \paperheight 249mm
+  \paperwidth 171mm
+  \dimen1 155pt
+}{
+  \paperheight 171mm
+  \paperwidth 249mm
+  \dimen1 240pt
+}
+\textheight\paperheight\advance\textheight -30mm
+\textwidth 2\dimen1 \advance\textwidth\columnsep
+\dimen0 2in \advance\dimen0\textwidth
+\oddsidemargin\paperwidth \advance\oddsidemargin -\dimen0
+\divide\oddsidemargin 2
+\evensidemargin\oddsidemargin
+\topmargin\paperheight\advance\topmargin -2in
+\advance\topmargin -\textheight\divide\topmargin 2
+\advance\textheight\topskip
+\advance\topmargin -\topskip

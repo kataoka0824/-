@@ -1,0 +1,86 @@
+\documentclass[a4paper,11pt,oneside]{jsbook}    %bookスタイルでないとchapterが使えないのでこのようにしている
+
+%\usepackage{listings}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{here}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{multirow}
+
+% 参考文献リストで使用、使わない場合はコメントアウトしてもいい
+\usepackage[numbers]{natbib}
+% 添削時に意見をほしいなーって部分で使用した
+\usepackage{color}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 本文の行数と桁数を指定できるようにする
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \makeatletter
+   \def\mojiparline#1{
+        \newcounter{mpl}
+        \setcounter{mpl}{#1}
+        \@tempdima=\linewidth
+        \advance\@tempdima by-\value{mpl}zw
+        \addtocounter{mpl}{-1}
+        \divide\@tempdima by \value{mpl}
+        \advance\kanjiskip by\@tempdima
+        \advance\parindent by\@tempdima
+   }
+   \makeatother
+   \def\linesparpage#1{
+       \baselineskip=\textheight
+       \divide\baselineskip by #1
+   }
+
+\setstretch{0.5} % ページ全体の行間を設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ここからは個人的にほしいなー思ったコマンドの作成
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% 数式で使用
+\newcommand{\V}[1]{\boldsymbol{#1}}
+\newcommand{\T}[1]{\text{#1}}
+
+%%% 参照するときに使用
+\newcommand{\figref}[1]{Fig. \ref{#1}}
+\newcommand{\tabref}[1]{Table \ref{#1}}
+\newcommand{\eqnref}[1]{式 \ref{#1}}
+\newcommand{\secref}[1]{\ref{#1}章}
+
+% 図表の式〜をFig. ~に変更
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% 設定などはここまで
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mojiparline{40}        %1行あたり文字数の指定
+\linesparpage{30}       %1ページあたり行数の指定
+
+\include{tex/title}
+\include{tex/abstract}
+
+% 目次（何もない状態で表示すると邪魔なのでコメントアウトしている）
+% 提出時はコメントを外す
+% \tableofcontents
+% \listoffigures
+% \listoftables
+
+% ここから本文を追加していく
+\include{tex/introduction}
+
+% 参考文献リスト
+\bibliographystyle{nya}
+\bibliography{references}
+
+% 付録
+% \include{tex/appendix}
+
+\end{document}

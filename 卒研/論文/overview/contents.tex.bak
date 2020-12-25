@@ -1,0 +1,143 @@
+\section{緒言}\label{ux7dd2ux8a00}
+近年，自律移動ロボットの行動範囲は遊歩道や公園といった環境にまで広がってきている．特に，つくばチャレンジ{[}RealWorld Robot Challenge(RWRC){]}では
+「人々が暮らしている現実の世界でキチンと働く」ロボットを実現するために，つくば市での公開実験走行の機会が数回設けられている．
+
+
+移動ロボットに必要な機能として自己位置推定がある.自己位置推定はロボットが経路計画を行う際に必要となっており，自己位置推定が誤っている場合，コースアウトするおそれがある.
+自己位置推定をする方法としてMonte Carlo localization(MCL)を用いているが，一般的なParticle Filter アルゴリズムでは十分な障害物がない環境または実際の環境と環境地図が乖離している場合などの，事前予測が困難な事象に対して脆弱という問題がある. \par
+これら問題に対して，ある程度の精度と利便性のある全球測位衛生システム(GNSS)を用いれば大まかな位置を求めることはできる.
+GNSSの測位方法としては単独測位,DGPS測位,RTK測位などが存在する．
+その中でもRTK測位は精度が保証されているFix解が存在するため,自己位置推定の補助として使える.
+RTK測位での位置精度は岡本ら\cite{okamoto}によると，Fix解での誤差3cm程度とされている.\par
+
+マルチパスを考慮した自己位置推定に関してはHentschel\cite{Hentschel}
+らが用いたGPSデータとオドメトリの統合により誤差を減らす手法や,
+山崎ら\cite{Yamazaki}の衛星の影を考慮した手法がある．
+
+つくばチャレンジにおいて従来から用いている自己位置推定手法の計測モデルにRTK測位を加えることで，ランドマークの少ない環境においても安定して自己位置推定できるシステムを提案し，検証することを目的とする．
+
+\section{提案手法}\label{sec:method}
+本手法ではRTK測位システムをAMCLにおける重み付けステップに統合した自己位置推定法を提案する．
+\subsection{RTK測位値の保存}\label{ux8a8dux8b58ux306bux7528ux3044ux308bux7279ux5fb4}
+従来のSLAMを用いて作成した環境地図は必ずしも現実の地図と等しいとは限らない．
+そのためRTK測位の結果をそのまま使用することはできないので，RTK測位の結果を環境地図の座標(テーブル)として保存する必要がある.
+
+本研究で作成するテーブルは環境地図における姿勢(x,y)とRTK測位の測位結果(lat，lon)を持っているものとし，
+テーブル作成概要をFig.\ref{fig:create_table}に示し，以下に説明する.
+\begin{enumerate}
+  \item　自己位置推定とRTK測位を同時に行う
+  \item　前回の測位からの距離を算出する.
+  \item　距離が一定の範囲内の場合は一時保存を，範囲外の場合は棄却を行う
+  \item　3秒以上データを保存した場合，一時保存したデータをすべて棄却し，その時の姿勢(x,y)と緯経度(lat,lon)をテーブルとして保存する
+\end{enumerate}
+
+
+\subsection{重み付けステップ} \label{sec:omomi}
+RTK測位データを含む地図データとRTK測域システムを用いたAMCLによる重み付けステップの概要をFig.\ref{fig:method_amcl}に示し，以下に説明する.
+\begin{enumerate}
+    \item 測位結果から各テーブルの距離を計算し，距離が一定以下となるテーブルを算出する
+    \item 各テーブルと測位解から環境地図上でのそれぞれの座標を計算する
+    \item 座標から重心となる点を算出する，\\
+    \item 各パーティクルに対してRTK測位によるによる計測モデルに基づき重みを計算する
+    \item 各パーティクルに対してニ次元測位センサによる計測モデルに基づき重みを計算する
+    \item 4.，5.で求めた尤度から各パーティクルの尤度を計算する
+\end{enumerate}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width = 7cm ]{./Fig/create_table.pdf}
+    \caption{Creation of GNSS table by RTK positioning}
+    \label{fig:create_table}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=8.0cm]{./Fig/reference_method.pdf}
+    \caption{Proposal method of weighting step}
+    \label{fig:method_amcl}
+\end{figure}
+
+
+\section{実験}
+第\ref{sec:method}章で述べた手法によって自己位置推定が可能かを目的実際のロボットに提案手法を実装し実験を行った．
+\subsection{実験方法}
+自律移動ロボットOREN(\ref{fig:orne})にGNSS受信機SCR-u2TとGNSSアンテナtw2710gpを搭載し，千葉工業大学新習志野校舎(Fig.\ref{fig:shinnara})の敷地内を走行させ，
+各時刻のデータをタイムスタンプと共に記録する．その後,記録したデータを元に提案手法によって自己位置推定を行なう.
+\begin{figure}[htbp]
+	\centering
+	\begin{tabular}{c}
+		\begin{minipage}{0.5\hsize}
+			\includegraphics[width=3.5cm]{./Fig/alpha.pdf}
+      \caption{OREN}
+      \label{fig:orne}
+    \end{minipage}
+		\begin{minipage}{0.5\hsize}
+			\includegraphics[width=3cm]{./Fig/shinnara.pdf}
+      \caption{CIT shinnarashino campus}
+      \label{fig:shinnara}
+    \end{minipage}
+	\end{tabular}
+\end{figure}
+
+\subsection{実験結果}
+実験結果をFig.\ref{fig:pre_experiment}に示す．(a) : RTK 測位の補正なしの自己位置推定, (b) : RTK 測位の補正ありの自己位置推定, (c) :走行時の写真となっており，
+(a),(b)における赤い点は自己位置の候補（パーティクル）となっている．提案手法によって二次元測域センサでは周囲の環境が観測しにくい箇所，及び環境地図と実際の環境が異なる地図において自己位置推定が可能であった．
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tabular}{c}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/amcl1.pdf}
+        \end{minipage}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/rtk_amcl1.pdf}
+        \end{minipage}
+        \begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/real1.pdf}
+        \end{minipage}
+	\end{tabular}
+    \begin{tabular}{c}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/amcl2.pdf}
+        \end{minipage}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/rtk_amcl2.pdf}
+        \end{minipage}
+        \begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/real2.pdf}
+        \end{minipage}
+	\end{tabular}
+
+    \begin{tabular}{c}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/amcl3.pdf}
+        \end{minipage}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/rtk_amcl3.pdf}
+        \end{minipage}
+        \begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/real3.pdf}
+        \end{minipage}
+	\end{tabular}
+
+    \begin{tabular}{c}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/amcl4.pdf}
+
+          \subcaption{Former method}
+        \end{minipage}
+		\begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.5cm]{./Fig/Preliminary_experiment/rtk_amcl4.pdf}
+        \subcaption{Proposed method}
+        \end{minipage}
+        \begin{minipage}{0.33\hsize}
+			\includegraphics[width=2.7cm]{./Fig/Preliminary_experiment/real4.pdf}
+          \subcaption{Actual position}
+        \end{minipage}
+	\end{tabular}
+    \caption{Changes in self-location estimation by RTK positioning correction}
+    \label{fig:pre_experiment}
+\end{figure}
+
+\section{結言}
+本稿では従来の自己位置推定法の計測モデルにRTK測位を加えたシステムを提案し，実環境で実験を行った.この手法によりランドマークの少ない環境でも自己位置推定が可能になり有効性を確認した．
+しかし，RTK測位値の保存においてマルチパスの影響を受けた場合誤った位置に測位値を保存するなどの課題がのこる．

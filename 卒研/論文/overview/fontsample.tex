@@ -1,0 +1,57 @@
+% ----------------------------------------------------------------
+%
+%                written by Ken Kishimoto kkishim@kokushikan.ac.jp 
+%                Time-stamp: "2001/10/11 03:28:33 ken"
+% $Id:$
+% ----------------------------------------------------------------
+\font\dunh=cmdunh10
+ \begin{table*}[t]
+ \begin{center}
+ \caption{\mydoc で使用可能な文字書体}
+\label{tbl:mojifont}
+ \begin{tabular}{lc|l|l|l}\dhline
+ \multicolumn{2}{c|}{書\quad 体} & 記号       & 10pt フォント & サンプル \\\hline
+ ローマン体 &      & \verb+\rm+ & cmr10    & {\rm This is Roman.} \\
+       & 太字$^*$ & \verb+\bf+& cmb10    & {\bf This is Bold Roman.}\\
+      & イタリック & \verb+\it+ & cmti10   & {\it This is Italic.} \\
+            & 斜体 & \verb+\sl+ & cmsl10   & {\sl This is Slant.} \\
+ \hline
+ ボールド   &      & \verb+\bf+ & cmbx10   & {\bf This is Bold face.} \\
+        & 斜体$^*$ &\verb+\bfs+ & cmbxsl10 & {\bfs This is slanted Bold face.}\\
+      & イタリック &\verb+\bfi+ & cmbxti10 & {\bfi This is Italic Bold face.} \\
+ \hline
+ タイプライター & & \verb+\tt+  & cmtt10   & {\tt This is Typewriter type.} \\
+   & イタリック & & cmitt10  & \font\test=cmitt10 {\test This is Italic Typewriter.} \\
+         & 斜体 & & cmsltt10 & \font\test=cmsltt10 {\test This is Slanted Typewriter.} \\
+%           & 太字 & &          & {\tt\bf This is Slanted Typewriter.} \\
+ \hline
+ サンセリフ   & & \verb+\sf+ & cmss10   & {\sf This is Sans Selif.} \\
+         & 太字 & \verb+\bsf+ & cmssdc10 & {\bsf This is Bold Sans Selif.}\\
+   & ボールド字 & \verb+\mbsf+  & cmssbx10 & {\msf This is Bold X Sans Selif.}\\
+      & イタリック & & cmssi10  & \font\test=cmssi10 {\test This is slantes Sans Selif.}\\
+            & 小体 & & cmssq8 & \font\test=cmssq8 {\test This is small Sans Selif.} \\
+            & 小斜体 & & cmssqi8 & \font\test=cmssqi8 {\test This is small slanted Sans Selif.} \\
+ & & & lcmss8  &\font\test=lcmss8 {\test This is written in `lcmss8.'} \\
+ & & & lcmssb8 &\font\test=lcmssb8 {\test This is written in `lcmssb8.'}\\
+ & & & lcmssi8 &\font\test=lcmssi8 {\test This is written in `lcmssi8.'}\\
+ \hline
+ 数学文字   &      & \verb+\mit+ & cmmi10 & \font\test=cmmi10 {\test This}\ {\test is}\ {\test Math}\ {\test Italic}. \\
+            & 太字 & \verb+\boldmath+ & cmmib10 & \font\test=cmmib10 {\test This}\ {\test is}\ {\test Bold}\ {\test Math}\ {\test Italic}.\\
+ \hline
+ 明朝体     & & \verb+\mc+ & min10  & {\mc これは明朝体です. } \\
+ ゴシック   & & \verb+\gt+ & goth10   & {\gt これはゴシック体です. } \\
+ \hline
+ 小型大文字 & & \verb+\sc+ & cmcsc10  & {\sc This is Small Cap.} \\
+            & & & cmtcsc10  & \font\test=cmtcsc10 {\test This is \TeX font.}\\
+ \hline
+ ダンヒル   & &            & cmdunh10 & {\dunh This is Dunhill.} \\
+ CM\TeX     & & & cmtex10  & \font\test=cmtex10 {\test This is \TeX font.}\\
+ %          & & & cmsa10  & \font\test=cmsa10 {\test This is \TeX font.}\\
+ High Script  & & & cmu10  & \font\test=cmu10 {\test This is \TeX font.}\\
+ Rough Script & & & cmff10  & \font\test=cmff10 {\test This is \TeX font.}\\
+ like Little Bold  & & & cmfib8  & \font\test=cmfib8 scaled \magstep1 {\test This is \TeX font.}\\
+ \hline
+ \end{tabular}
+ \end{center}
+ \end{table*}
+\normalsize

@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# gif ファイルを周囲の余分な空白を取り去り直接 ps に変換する。
+#
+for ff in $*
+do 
+#  echo $ff
+  fs=`echo $ff | sed 's/gif/ps/'`
+#  echo $fs
+  giftopnm $ff | pnmcrop | pnmtops -noturn > $fs
+done

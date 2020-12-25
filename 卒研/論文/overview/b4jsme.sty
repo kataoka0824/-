@@ -1,0 +1,35 @@
+% b4jsme.tex
+%    paper size B4 for J.S.M.E. paper
+%                                (c) 1994  Ken Kishimoto
+%
+\makeatletter
+\newdimen\paperheight
+\newdimen\paperwidth
+\columnsep 26pt
+\leftmargini 2em
+\leftmarginv .6em
+\leftmarginvi .6em
+\marginparwidth 6pt
+\marginparsep 6pt
+\headsep 18pt\footskip 16pt
+\parindent 1zw
+\@ifundefined{@lands}{
+  \paperheight 352mm
+  \paperwidth 249mm
+  \dimen1 310pt
+}{
+  \paperheight 249mm
+  \paperwidth  352mm
+  \dimen1 480pt
+}
+\textheight\paperheight\advance\textheight -30mm
+\textwidth 2\dimen1 \advance\textwidth\columnsep
+\dimen0 2in \advance\dimen0\textwidth
+\oddsidemargin\paperwidth \advance\oddsidemargin -\dimen0
+\divide\oddsidemargin 2
+\evensidemargin\oddsidemargin
+\topmargin\paperheight\advance\topmargin -2in
+\advance\topmargin -\textheight\divide\topmargin 2
+\advance\textheight\topskip
+\advance\topmargin -\topskip
+\makeatother

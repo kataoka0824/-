@@ -1,0 +1,57 @@
+\documentclass[a4jsme]{jsmepaper}
+\usepackage{fancyhdr}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{fancyhdr}
+\usepackage{here}
+\usepackage{amsmath}
+\usepackage[subrefformat=parens]{subcaption}
+
+\renewcommand{\figurename}{Fig.}
+\input{dummy}
+\lhead{\normalsize{2016年度卒業論文概要}}
+\rhead[]{}
+\renewcommand{\headrulewidth}{0.0pt}
+
+\newcommand{\bhline}[1]{\noalign{\hrule height #1}}
+%
+\jtitle{日本語タイトル}
+\etitle{English title}
+
+\jauthor{学番 氏名}
+\eauthor{full name}
+
+\jaffiliation{
+    & \hspace{-1cm}\normalsize{指導教員：林原靖男}
+}
+
+\abstract{
+In this paper, aaaaaaaaaaaaaaaaaaaa
+}
+\keywords{RDC LAB, Yasuo Hayashibara, template}
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+\small
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%  本文
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{諸元}
+本文を書いていく
+
+
+% 参考文献リストを使わない場合はこんな感じで追加していく
+\scriptsize
+\begin{thebibliography}{9}
+  \bibitem{Hentschel} M. Hentschel, O. Wulf and B. Wagner: “A gps and laser-based localization for urban and
+non-urban outdoor environments”, IEEE (2008).
+  \bibitem{Yamazaki} 山崎 , 竹内 , 大野 , 田所: “ 三次元地形情報および GPS を用いたパーティクルフィルタによるマル
+チパスを考慮した自己位置推定 ”, 日本ロボット学会誌 , vol.29, pp. 702–709 (2011).
+の基礎と実力”, トランジスタ技術２０１６年２月号, 53（２）, pp. 66–79 (2016)
+\end{thebibliography}
+\small
+
+\end{document}

@@ -1,0 +1,3 @@
+USBポート確認:ls -l /dev |grep ttyUSB
+地図手順roscore>cd_cat+roslaunch rplidar_ros rplidar.launch
+>cd_cat+roslaunch hector_slam_launch tutorial.launch

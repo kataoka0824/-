@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Postscript のファイルを gif に変換する。
+#
+for ff in $*
+do 
+  fs=`echo $ff | sed 's/\.ps/001.ppm/'`
+  gif=`echo $ff | sed 's/\.ps/.gif/'`
+  pstopnm -xmax 1240 -ymax 1500 -portrait $ff
+  pnmcrop $fs | ppmtogif > $gif
+  rm -f $fs
+done

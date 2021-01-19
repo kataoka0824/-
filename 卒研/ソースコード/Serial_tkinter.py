@@ -1,3 +1,4 @@
+# coding:utf-8
 import serial
 import time
 import tkinter as tk
@@ -20,14 +21,14 @@ def move_stop(event):
 root=tk.Tk()
 root.title("serial")
 root.geometry("500x300")
-text_explain=tk.Label(text="→←↑↓の4つのキーで操作を行います")
+text_explain=tk.Label(text="右,左,上,下の4つの方向キーで操作を行います")
 text_explain.grid(row=0,column=0)
 frame=tk.Frame(root,width=500,height=300)
 root.bind('<Left>',move_left)
 root.bind('<Right>',move_right)
 root.bind('<Up>',move_up)
 root.bind('<Down>',move_down)
-root.bind('<Space>',move_stop)
+root.bind('<space>',move_stop)
 root.mainloop()
 ser.close()
 #シリアル通信
